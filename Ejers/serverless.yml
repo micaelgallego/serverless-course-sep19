@@ -29,6 +29,11 @@ functions:
     environment:
       getTogethersTableName: ${self:custom.getTogethersTableName}
 
+  sqsFunction:
+    handler: src/functions/sqsFunction.handler
+    events:
+      - sns: dispatch
+
 resources:
   Resources:
     GetTogethersTable:
