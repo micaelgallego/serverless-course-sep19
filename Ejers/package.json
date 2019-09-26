@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:integration": "jest ./tests/*"
+    "test:integration": "TEST_MODE=handler jest ./tests/*",
+    "test:acceptance": "TEST_MODE=http jest ./tests/*"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,8 @@
   "homepage": "https://github.com/micaelgallego/serverless-course-sep19#readme",
   "devDependencies": {
     "jest": "^24.9.0",
-    "serverless": "^1.53.0"
+    "serverless": "^1.53.0",
+    "superagent": "^5.1.0",
+    "superagent-promise": "^1.1.0"
   }
 }

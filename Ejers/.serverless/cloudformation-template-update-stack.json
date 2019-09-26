@@ -105,7 +105,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/gettogether/dev/1569487346219-2019-09-26T08:42:26.219Z/gettogether.zip"
+          "S3Key": "serverless/gettogether/dev/1569490421093-2019-09-26T09:33:41.093Z/gettogether.zip"
         },
         "FunctionName": "gettogether-dev-helloWorld",
         "Handler": "src/functions/helloWorld.handler",
@@ -124,14 +124,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "HelloWorldLambdaVersionDObW6zMs32I8PiOs13RHzPu3mR2GEhm66lvrDpEBY0": {
+    "HelloWorldLambdaVersionG7ND20UmvANgPe2DyPTlAEx5DtCCOCsYUWePm9BMA1o": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloWorldLambdaFunction"
         },
-        "CodeSha256": "UwhWnvNWW0Ip9LaEvQABcNZyTkestpHskG4PEkuCXj8="
+        "CodeSha256": "h8O9Ee1vamlaUCkgmD48ah1v/2v5NSNUgL1BFQ9789Q="
       }
     },
     "ApiGatewayRestApi": {
@@ -172,13 +172,25 @@
         }
       }
     },
-    "ApiGatewayMethodApiHelloworldPost": {
+    "ApiGatewayResourceApiHelloworldNameVar": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayResourceApiHelloworld"
+        },
+        "PathPart": "{name}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodApiHelloworldNameVarGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
-        "HttpMethod": "POST",
+        "HttpMethod": "GET",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiHelloworld"
+          "Ref": "ApiGatewayResourceApiHelloworldNameVar"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -215,7 +227,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1569487331291": {
+    "ApiGatewayDeployment1569490398603": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -224,7 +236,7 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodApiHelloworldPost"
+        "ApiGatewayMethodApiHelloworldNameVarGet"
       ]
     },
     "HelloWorldLambdaPermissionApiGateway": {
@@ -274,7 +286,7 @@
     "HelloWorldLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloWorldLambdaVersionDObW6zMs32I8PiOs13RHzPu3mR2GEhm66lvrDpEBY0"
+        "Ref": "HelloWorldLambdaVersionG7ND20UmvANgPe2DyPTlAEx5DtCCOCsYUWePm9BMA1o"
       }
     },
     "ServiceEndpoint": {
