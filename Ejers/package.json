@@ -4,7 +4,8 @@
   "description": "Ejercicios del curso de serverless realizado en Septiembre de 2019",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:integration": "jest ./tests/*"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/micaelgallego/serverless-course-sep19#readme",
   "devDependencies": {
+    "jest": "^24.9.0",
     "serverless": "^1.53.0"
   }
 }
