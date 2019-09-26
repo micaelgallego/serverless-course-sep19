@@ -119,7 +119,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/gettogether/dev/1569487118550-2019-09-26T08:38:38.550Z/gettogether.zip"
+                "S3Key": "serverless/gettogether/dev/1569487346219-2019-09-26T08:42:26.219Z/gettogether.zip"
               },
               "FunctionName": "gettogether-dev-helloWorld",
               "Handler": "src/functions/helloWorld.handler",
@@ -138,14 +138,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "HelloWorldLambdaVersionTbQk6bDzwhy5gXw465nTtYMuPuJItWSZY7xV8jQidqs": {
+          "HelloWorldLambdaVersionDObW6zMs32I8PiOs13RHzPu3mR2GEhm66lvrDpEBY0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloWorldLambdaFunction"
               },
-              "CodeSha256": "2pCInBZzpAIFttXVbRjjfMYEj/gdIFvM6/n3B4v18yA="
+              "CodeSha256": "UwhWnvNWW0Ip9LaEvQABcNZyTkestpHskG4PEkuCXj8="
             }
           },
           "ApiGatewayRestApi": {
@@ -186,25 +186,13 @@
               }
             }
           },
-          "ApiGatewayResourceApiHelloworldNameVar": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Ref": "ApiGatewayResourceApiHelloworld"
-              },
-              "PathPart": "{name}",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodApiHelloworldNameVarGet": {
+          "ApiGatewayMethodApiHelloworldPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
-              "HttpMethod": "GET",
+              "HttpMethod": "POST",
               "RequestParameters": {},
               "ResourceId": {
-                "Ref": "ApiGatewayResourceApiHelloworldNameVar"
+                "Ref": "ApiGatewayResourceApiHelloworld"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -241,7 +229,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1569487102972": {
+          "ApiGatewayDeployment1569487331291": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -250,7 +238,7 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodApiHelloworldNameVarGet"
+              "ApiGatewayMethodApiHelloworldPost"
             ]
           },
           "HelloWorldLambdaPermissionApiGateway": {
@@ -300,7 +288,7 @@
           "HelloWorldLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloWorldLambdaVersionTbQk6bDzwhy5gXw465nTtYMuPuJItWSZY7xV8jQidqs"
+              "Ref": "HelloWorldLambdaVersionDObW6zMs32I8PiOs13RHzPu3mR2GEhm66lvrDpEBY0"
             }
           },
           "ServiceEndpoint": {
@@ -364,8 +352,8 @@
         "events": [
           {
             "http": {
-              "path": "api/helloWorld/{name}",
-              "method": "get",
+              "path": "api/helloWorld",
+              "method": "post",
               "integration": "AWS_PROXY"
             }
           }
@@ -380,10 +368,10 @@
     },
     "serviceFilename": "serverless.yml",
     "layers": {},
-    "artifact": "/home/mica/Data/CodeURJC/CodeURJC/Privado/Docencia/Curso serverless/serverless-course-sep19/Ejer1/.serverless/gettogether.zip"
+    "artifact": "/home/mica/Data/CodeURJC/CodeURJC/Privado/Docencia/Curso serverless/serverless-course-sep19/Ejers/.serverless/gettogether.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/gettogether/dev/1569487118550-2019-09-26T08:38:38.550Z",
+    "artifactDirectoryName": "serverless/gettogether/dev/1569487346219-2019-09-26T08:42:26.219Z",
     "artifact": "gettogether.zip"
   }
 }
