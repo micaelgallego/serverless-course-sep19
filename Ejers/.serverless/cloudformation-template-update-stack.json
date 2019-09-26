@@ -16,10 +16,10 @@
         }
       }
     },
-    "HelloWorldLogGroup": {
+    "GetGetTogethersLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/gettogether-dev-helloWorld"
+        "LogGroupName": "/aws/lambda/gettogether-devmmm-getGetTogethers"
       }
     },
     "IamRoleLambdaExecution": {
@@ -47,7 +47,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "dev",
+                  "devmmm",
                   "gettogether",
                   "lambda"
                 ]
@@ -63,7 +63,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gettogether-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gettogether-devmmm*:*"
                     }
                   ]
                 },
@@ -74,7 +74,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gettogether-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gettogether-devmmm*:*:*"
                     }
                   ]
                 }
@@ -88,7 +88,7 @@
             "-",
             [
               "gettogether",
-              "dev",
+              "devmmm",
               {
                 "Ref": "AWS::Region"
               },
@@ -98,46 +98,51 @@
         }
       }
     },
-    "HelloWorldLambdaFunction": {
+    "GetGetTogethersLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/gettogether/dev/1569503294608-2019-09-26T13:08:14.608Z/gettogether.zip"
+          "S3Key": "serverless/gettogether/devmmm/1569504412549-2019-09-26T13:26:52.549Z/gettogether.zip"
         },
-        "FunctionName": "gettogether-dev-helloWorld",
+        "FunctionName": "gettogether-devmmm-getGetTogethers",
         "Handler": "src/functions/getGetTogether.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
-            "HelloWorldIamRoleLambdaExecution",
+            "GetGetTogethersIamRoleLambdaExecution",
             "Arn"
           ]
         },
         "Runtime": "nodejs10.x",
-        "Timeout": 6
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "getTogethersTableName": "devmmm-gettogethers"
+          }
+        }
       },
       "DependsOn": [
-        "HelloWorldIamRoleLambdaExecution",
-        "HelloWorldLogGroup"
+        "GetGetTogethersIamRoleLambdaExecution",
+        "GetGetTogethersLogGroup"
       ]
     },
-    "HelloWorldLambdaVersion2N5xEhoOvTAhuUvSM8PiLOj6INpKc86dwL3CT4ULKW4": {
+    "GetGetTogethersLambdaVersionyCDynE0uK5wF3ZxaoU0H5flerv5MUC0fb9apno4Vc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "HelloWorldLambdaFunction"
+          "Ref": "GetGetTogethersLambdaFunction"
         },
-        "CodeSha256": "nmJe87BzTZsym3nxoZZlz+RPFiOQodRfy7Ie92SjX5o="
+        "CodeSha256": "DtLTjrwH8AcZWZjcx+hkiRTOtzNvFiqcWT64lg860YE="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-gettogether",
+        "Name": "devmmm-gettogether",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -203,7 +208,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "HelloWorldLambdaFunction",
+                    "GetGetTogethersLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -215,24 +220,24 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1569503284122": {
+    "ApiGatewayDeployment1569504402199": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "devmmm"
       },
       "DependsOn": [
         "ApiGatewayMethodApiGettogethersGet"
       ]
     },
-    "HelloWorldLambdaPermissionApiGateway": {
+    "GetGetTogethersLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "HelloWorldLambdaFunction",
+            "GetGetTogethersLambdaFunction",
             "Arn"
           ]
         },
@@ -264,7 +269,7 @@
         }
       }
     },
-    "HelloWorldIamRoleLambdaExecution": {
+    "GetGetTogethersIamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -289,7 +294,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "dev",
+                  "devmmm",
                   "gettogether",
                   "lambda"
                 ]
@@ -306,7 +311,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gettogether-dev-helloWorld:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gettogether-devmmm-getGetTogethers:*:*"
                     }
                   ]
                 },
@@ -314,7 +319,7 @@
                   "Effect": "Allow",
                   "Action": "dynamodb:scan",
                   "Resource": {
-                    "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/gettogethers"
+                    "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/devmmm-gettogethers"
                   }
                 }
               ]
@@ -327,8 +332,8 @@
             "-",
             [
               "gettogether",
-              "dev",
-              "helloWorld",
+              "devmmm",
+              "getGetTogethers",
               {
                 "Ref": "AWS::Region"
               },
@@ -342,7 +347,7 @@
     "GetTogethersTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "TableName": "gettogethers",
+        "TableName": "devmmm-gettogethers",
         "AttributeDefinitions": [
           {
             "AttributeName": "id",
@@ -365,10 +370,10 @@
         "Ref": "ServerlessDeploymentBucket"
       }
     },
-    "HelloWorldLambdaFunctionQualifiedArn": {
+    "GetGetTogethersLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloWorldLambdaVersion2N5xEhoOvTAhuUvSM8PiLOj6INpKc86dwL3CT4ULKW4"
+        "Ref": "GetGetTogethersLambdaVersionyCDynE0uK5wF3ZxaoU0H5flerv5MUC0fb9apno4Vc"
       }
     },
     "ServiceEndpoint": {
@@ -389,7 +394,7 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/dev"
+            "/devmmm"
           ]
         ]
       }
