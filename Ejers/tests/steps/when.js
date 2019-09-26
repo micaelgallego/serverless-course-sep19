@@ -23,7 +23,9 @@ function viaHandler(funcName, event){
 
 async function viaHttp(pathName){
 
-    const url = `https://v43r7coe0d.execute-api.eu-west-1.amazonaws.com/dev/api/${pathName}/`;
+    //TEST_BASE_URL=https://nju6y3okfa.execute-api.eu-west-1.amazonaws.com/devmmm/api/;
+
+    const url = process.env.TEST_BASE_URL + pathName;
     
     const response = await http('GET', url);
 

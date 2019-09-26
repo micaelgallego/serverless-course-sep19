@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:integration": "TEST_MODE=handler jest ./tests/*",
     "test:acceptance": "TEST_MODE=http jest ./tests/*",
-    "deploy": "npx sls deploy --aws-profile serverless-local"
+    "deploy": "SLSUSER=mmm npx sls deploy --aws-profile serverless-local"
   },
   "repository": {
     "type": "git",

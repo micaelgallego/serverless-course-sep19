@@ -1,17 +1,22 @@
 service: gettogether
 
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-iam-roles-per-function
+
 provider:
   name: aws
   runtime: nodejs10.x
-  region: eu-west-1
-  stage: dev
+  region: ${opt:region, self:custom.defaultRegion}
+  stage: ${opt:stage, self:custom.defaultStage}
 
-plugins:
-- serverless-pseudo-parameters
-- serverless-iam-roles-per-function
+custom:
+  defaultRegion: eu-west-1
+  defaultStage: dev${env:SLSUSER, ""}
+  getTogethersTableName: ${self:provider.stage}-gettogethers
 
 functions:
-  helloWorld:
+  getGetTogethers:
     handler: src/functions/getGetTogether.handler
     events:
       - http:
@@ -20,14 +25,16 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:scan
-        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/gettogethers
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.getTogethersTableName}
+    environment:
+      getTogethersTableName: ${self:custom.getTogethersTableName}
 
 resources:
   Resources:
     GetTogethersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: gettogethers
+        TableName: ${self:custom.getTogethersTableName}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: N
