@@ -1,7 +1,7 @@
 //var Promise = this.Promise || require('promise');
 var http = require('superagent-promise')(require('superagent'), Promise);
 
-module.exports.we_invoke_helloWorld = (name) => {
+module.exports.we_invoke_getTogether = (name) => {
     const event = { pathParameters: { name: name } };
 
     const testMode = process.env.TEST_MODE;
@@ -9,7 +9,7 @@ module.exports.we_invoke_helloWorld = (name) => {
     if(testMode === 'handler'){
         return viaHandler("getGetTogether", event);    
     } if(testMode === 'http'){
-        return viaHttp('getTogethers', name);
+        return viaHttp('getTogethers');
     } else {
         console.error(`Unrecognized TEST_MODE ${testMode}`);
     }
@@ -21,14 +21,14 @@ function viaHandler(funcName, event){
     return handler.handler(event);
 }
 
-async function viaHttp(funcName, name){
+async function viaHttp(pathName){
 
-    const url = `https://v43r7coe0d.execute-api.eu-west-1.amazonaws.com/dev/api/${funcName}/`;
+    const url = `https://v43r7coe0d.execute-api.eu-west-1.amazonaws.com/dev/api/${pathName}/`;
     
-    const response = await http('GET', url + name);
+    const response = await http('GET', url);
 
     return {
         statusCode: response.status,
-        body: response.body
+        body: JSON.stringify(response.body)
     }
 }

@@ -105,14 +105,14 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/gettogether/dev/1569493392982-2019-09-26T10:23:12.982Z/gettogether.zip"
+          "S3Key": "serverless/gettogether/dev/1569503294608-2019-09-26T13:08:14.608Z/gettogether.zip"
         },
         "FunctionName": "gettogether-dev-helloWorld",
         "Handler": "src/functions/getGetTogether.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
+            "HelloWorldIamRoleLambdaExecution",
             "Arn"
           ]
         },
@@ -120,18 +120,18 @@
         "Timeout": 6
       },
       "DependsOn": [
-        "HelloWorldLogGroup",
-        "IamRoleLambdaExecution"
+        "HelloWorldIamRoleLambdaExecution",
+        "HelloWorldLogGroup"
       ]
     },
-    "HelloWorldLambdaVersionu2QLLwY0G6mZJ72Rvpoj8sgyGs3oskMMRMSMXhbBU": {
+    "HelloWorldLambdaVersion2N5xEhoOvTAhuUvSM8PiLOj6INpKc86dwL3CT4ULKW4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloWorldLambdaFunction"
         },
-        "CodeSha256": "GvMEElz4jOcShHq4YiW6UgScAJzpiv+R27yBmgnPmlE="
+        "CodeSha256": "nmJe87BzTZsym3nxoZZlz+RPFiOQodRfy7Ie92SjX5o="
       }
     },
     "ApiGatewayRestApi": {
@@ -215,7 +215,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1569493382680": {
+    "ApiGatewayDeployment1569503284122": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -264,6 +264,81 @@
         }
       }
     },
+    "HelloWorldIamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "dev",
+                  "gettogether",
+                  "lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/gettogether-dev-helloWorld:*:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "dynamodb:scan",
+                  "Resource": {
+                    "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/gettogethers"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "gettogether",
+              "dev",
+              "helloWorld",
+              {
+                "Ref": "AWS::Region"
+              },
+              "lambdaRole"
+            ]
+          ]
+        },
+        "ManagedPolicyArns": []
+      }
+    },
     "GetTogethersTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
@@ -293,7 +368,7 @@
     "HelloWorldLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloWorldLambdaVersionu2QLLwY0G6mZJ72Rvpoj8sgyGs3oskMMRMSMXhbBU"
+        "Ref": "HelloWorldLambdaVersion2N5xEhoOvTAhuUvSM8PiLOj6INpKc86dwL3CT4ULKW4"
       }
     },
     "ServiceEndpoint": {
