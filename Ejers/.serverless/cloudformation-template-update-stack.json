@@ -105,10 +105,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/gettogether/dev/1569490421093-2019-09-26T09:33:41.093Z/gettogether.zip"
+          "S3Key": "serverless/gettogether/dev/1569493392982-2019-09-26T10:23:12.982Z/gettogether.zip"
         },
         "FunctionName": "gettogether-dev-helloWorld",
-        "Handler": "src/functions/helloWorld.handler",
+        "Handler": "src/functions/getGetTogether.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -124,14 +124,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "HelloWorldLambdaVersionG7ND20UmvANgPe2DyPTlAEx5DtCCOCsYUWePm9BMA1o": {
+    "HelloWorldLambdaVersionu2QLLwY0G6mZJ72Rvpoj8sgyGs3oskMMRMSMXhbBU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloWorldLambdaFunction"
         },
-        "CodeSha256": "h8O9Ee1vamlaUCkgmD48ah1v/2v5NSNUgL1BFQ9789Q="
+        "CodeSha256": "GvMEElz4jOcShHq4YiW6UgScAJzpiv+R27yBmgnPmlE="
       }
     },
     "ApiGatewayRestApi": {
@@ -160,37 +160,25 @@
         }
       }
     },
-    "ApiGatewayResourceApiHelloworld": {
+    "ApiGatewayResourceApiGettogethers": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
           "Ref": "ApiGatewayResourceApi"
         },
-        "PathPart": "helloWorld",
+        "PathPart": "getTogethers",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayResourceApiHelloworldNameVar": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayResourceApiHelloworld"
-        },
-        "PathPart": "{name}",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayMethodApiHelloworldNameVarGet": {
+    "ApiGatewayMethodApiGettogethersGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "GET",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiHelloworldNameVar"
+          "Ref": "ApiGatewayResourceApiGettogethers"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -227,7 +215,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1569490398603": {
+    "ApiGatewayDeployment1569493382680": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -236,7 +224,7 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodApiHelloworldNameVarGet"
+        "ApiGatewayMethodApiGettogethersGet"
       ]
     },
     "HelloWorldLambdaPermissionApiGateway": {
@@ -275,6 +263,25 @@
           ]
         }
       }
+    },
+    "GetTogethersTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "TableName": "gettogethers",
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "id",
+            "AttributeType": "N"
+          }
+        ],
+        "KeySchema": [
+          {
+            "AttributeName": "id",
+            "KeyType": "HASH"
+          }
+        ],
+        "BillingMode": "PAY_PER_REQUEST"
+      }
     }
   },
   "Outputs": {
@@ -286,7 +293,7 @@
     "HelloWorldLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloWorldLambdaVersionG7ND20UmvANgPe2DyPTlAEx5DtCCOCsYUWePm9BMA1o"
+        "Ref": "HelloWorldLambdaVersionu2QLLwY0G6mZJ72Rvpoj8sgyGs3oskMMRMSMXhbBU"
       }
     },
     "ServiceEndpoint": {

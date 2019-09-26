@@ -7,9 +7,9 @@ module.exports.we_invoke_helloWorld = (name) => {
     const testMode = process.env.TEST_MODE;
 
     if(testMode === 'handler'){
-        return viaHandler("helloWorld", event);    
+        return viaHandler("getGetTogether", event);    
     } if(testMode === 'http'){
-        return viaHttp('helloWorld', name);
+        return viaHttp('getTogethers', name);
     } else {
         console.error(`Unrecognized TEST_MODE ${testMode}`);
     }
