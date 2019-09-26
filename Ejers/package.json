@@ -1,0 +1,22 @@
+{
+  "name": "serverless-course-sep19",
+  "version": "1.0.0",
+  "description": "Ejercicios del curso de serverless realizado en Septiembre de 2019",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micaelgallego/serverless-course-sep19.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/micaelgallego/serverless-course-sep19/issues"
+  },
+  "homepage": "https://github.com/micaelgallego/serverless-course-sep19#readme",
+  "devDependencies": {
+    "serverless": "^1.53.0"
+  }
+}
