@@ -1,4 +1,5 @@
 const AWS = require("aws-sdk");
+const Log = require('@dazn/lambda-powertools-logger');
 
 module.exports.handler = async event => {
 
@@ -17,6 +18,8 @@ module.exports.handler = async event => {
         Message: JSON.stringify(user),
         TopicArn: process.env.getTogethersTopic
     }
+
+    Log.info("published 'master_enrolled' event", user);
 
     await sns.publish(params).promise();
     
