@@ -2,8 +2,9 @@ const middy = require('middy')
 const { ssm } = require('middy/middlewares')
 const Log = require('@dazn/lambda-powertools-logger');
 const correlationIds = require('@dazn/lambda-powertools-middleware-correlation-ids');
+const AWSXray = require("aws-xray-sdk");
 
-console.log('Table name path: '+process.env.getTogethersTableNamePath);
+AWSXray.captureAWS(require("aws-sdk"));
 
 let handler = middy((event, context) => {
 

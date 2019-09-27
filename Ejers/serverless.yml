@@ -3,6 +3,7 @@ service: gettogether
 plugins:
   - serverless-pseudo-parameters
   - serverless-iam-roles-per-function
+  - serverless-plugin-tracing
 
 provider:
   name: aws
@@ -11,6 +12,13 @@ provider:
   stage: ${opt:stage, self:custom.defaultStage}
   logs:
     restApi: true
+  tracing: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - 'xray:PutTraceSegments'
+        - 'xray:PutTelemetryRecords'
+      Resource: '*'
 
 custom:
   defaultRegion: eu-west-1
@@ -29,6 +37,7 @@ functions:
       - http:
           path: api/getTogethers
           method: get
+    iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: Allow
         Action: dynamodb:scan
@@ -39,6 +48,7 @@ functions:
     onError: ${self:custom.notifyOrganiserDLQSnsTopic}
     events:
       - sns: ${self:custom.getTogetherSnsTopicName}
+    iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: Allow
         Action: ssm:GetParameters*
@@ -60,6 +70,7 @@ functions:
       - http:
           path: api/joingGetTogether
           method: post
+    iamRoleStatementsInherit: true
     iamRoleStatements: 
       - Effect: Allow
         Action: sns:Publish

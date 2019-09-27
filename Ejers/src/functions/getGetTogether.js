@@ -1,4 +1,6 @@
-const AWS = require("aws-sdk");
+const AWSXray = require("aws-xray-sdk");
+
+AWSXray.captureAWS(require("aws-sdk"));
 
 module.exports.handler = async event => {
     
