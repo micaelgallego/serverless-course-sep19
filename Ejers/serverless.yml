@@ -19,7 +19,7 @@ custom:
   getTogetherSnsTopicName: ${self:provider.stage}-joingettogethers
   testVar: ${ssm:/gettogethers/tableName}
   testVar2: ${ssm:/gettogethers/secureTableName~true}
-
+  
 functions:
   getGetTogethers:
     handler: src/functions/getGetTogether.handler
@@ -31,13 +31,17 @@ functions:
       - Effect: Allow
         Action: dynamodb:scan
         Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.getTogethersTableName}
-    environment:
-      getTogethersTableName: ${self:custom.getTogethersTableName}
 
   sqsFunction:
     handler: src/functions/sqsFunction.handler
     events:
       - sns: ${self:custom.getTogetherSnsTopicName}
+    iamRoleStatements:
+      - Effect: Allow
+        Action: ssm:GetParameters*
+        Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/gettogethers/secureTableName
+    environment:
+      getTogethersTableNamePath: /gettogethers/secureTableName
 
   joingGetTogether:
     handler: src/functions/joingGetTogether.handler

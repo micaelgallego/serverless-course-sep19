@@ -13,8 +13,6 @@ module.exports.handler = async event => {
 
     const sns = new AWS.SNS();
 
-    
-
     const params = {
         Message: JSON.stringify(user),
         TopicArn: process.env.getTogethersTopic
