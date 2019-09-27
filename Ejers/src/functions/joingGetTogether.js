@@ -1,7 +1,7 @@
 const AWS = require("aws-sdk");
 const Log = require('@dazn/lambda-powertools-logger');
 const middy = require('middy');
-
+const sns = require('@dazn/lambda-powertools-sns-client')
 const correlationIds = require('@dazn/lambda-powertools-middleware-correlation-ids');
 
 let handler = async event => {
@@ -14,8 +14,6 @@ let handler = async event => {
     const orderId = 'sssss';
 
     user.orderId = orderId;
-
-    const sns = new AWS.SNS();
 
     const params = {
         Message: JSON.stringify(user),

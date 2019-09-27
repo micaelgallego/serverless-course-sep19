@@ -1,15 +1,19 @@
 const middy = require('middy')
 const { ssm } = require('middy/middlewares')
+const Log = require('@dazn/lambda-powertools-logger');
+const correlationIds = require('@dazn/lambda-powertools-middleware-correlation-ids');
 
 console.log('Table name path: '+process.env.getTogethersTableNamePath);
 
 let handler = middy((event, context) => {
 
-    console.log(context.tableNamePath);
+    Log.info(event);
+
+    Log.info(context.tableNamePath);
 
     const orderPlaced = JSON.parse(event.Records[0].Sns.Message);
 
-    console.log(orderPlaced);
+    Log.info(orderPlaced);
 
 });
 
@@ -25,4 +29,4 @@ handler.use(
     })
 )
 
-module.exports.handler = handler;
+module.exports.handler = middy(handler).use(correlationIds({ sampleDebugLogRate: 0 }));
