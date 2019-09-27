@@ -19,6 +19,8 @@ custom:
   getTogetherSnsTopicName: ${self:provider.stage}-joingettogethers
   testVar: ${ssm:/gettogethers/tableName}
   testVar2: ${ssm:/gettogethers/secureTableName~true}
+  notifyOrganiserDLQSnsTopicName: ${self:provider.stage}-joingettogetherdlq
+  notifyOrganiserDLQSnsTopic: arn:aws:sns:#{AWS::Region}:#{AWS::AccountId}:${self:custom.notifyOrganiserDLQSnsTopicName}
   
 functions:
   getGetTogethers:
@@ -34,14 +36,23 @@ functions:
 
   sqsFunction:
     handler: src/functions/sqsFunction.handler
+    onError: ${self:custom.notifyOrganiserDLQSnsTopic}
     events:
       - sns: ${self:custom.getTogetherSnsTopicName}
     iamRoleStatements:
       - Effect: Allow
         Action: ssm:GetParameters*
         Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/gettogethers/secureTableName
+      - Effect: Allow
+        Action: sns:Publish
+        Resource: ${self:custom.notifyOrganiserDLQSnsTopic}
     environment:
       getTogethersTableNamePath: /gettogethers/secureTableName
+
+  error:
+    handler: src/functions/error.handler
+    events:
+      - sns: ${self:custom.notifyOrganiserDLQSnsTopic}
 
   joingGetTogether:
     handler: src/functions/joingGetTogether.handler
@@ -73,3 +84,7 @@ resources:
           - AttributeName: id
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+    DLQueue:
+      Type: AWS::SNS::Topic
+      Properties: 
+        TopicName: ${self:custom.notifyOrganiserDLQSnsTopicName}

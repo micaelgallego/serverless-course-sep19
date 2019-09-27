@@ -13,6 +13,10 @@ let handler = middy((event, context) => {
 
     const orderPlaced = JSON.parse(event.Records[0].Sns.Message);
 
+    if(orderPlaced.userEmail === 'xxx'){
+        throw Error("Exception!!!!");
+    }
+
     Log.info(orderPlaced);
 
 });
