@@ -1,7 +1,10 @@
 const AWS = require("aws-sdk");
 const Log = require('@dazn/lambda-powertools-logger');
+const middy = require('middy');
 
-module.exports.handler = async event => {
+const correlationIds = require('@dazn/lambda-powertools-middleware-correlation-ids');
+
+let handler = async event => {
 
     console.log('Body: '+event.body);
     console.log('Topic name: '+process.env.getTogethersTopicName)
@@ -19,9 +22,9 @@ module.exports.handler = async event => {
         TopicArn: process.env.getTogethersTopic
     }
 
-    Log.info("published 'master_enrolled' event", user);
-
     await sns.publish(params).promise();
+
+    Log.info("published 'master_enrolled' event", params);
     
     const res = {
         statusCode: 200,
@@ -30,3 +33,5 @@ module.exports.handler = async event => {
 
     return res;
 };
+
+module.exports.handler = middy(handler).use(correlationIds({ sampleDebugLogRate: 0 }));
