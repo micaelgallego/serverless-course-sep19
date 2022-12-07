@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/micaelgallego/serverless-course-sep19#readme",
   "devDependencies": {
-    "serverless": "^1.53.0"
+    "serverless": "^3.25.1"
   }
 }
